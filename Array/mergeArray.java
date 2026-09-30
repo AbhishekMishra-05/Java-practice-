@@ -4,7 +4,7 @@ import java.util.*;
 
 class mergeArray {
 
-    static int[] concatArray(int[] arr1, int[] arr2, int size1, int size2) {
+    int[] concatArray(int[] arr1, int[] arr2, int size1, int size2) {
 
         int[] mergedArray = new int[size1 + size2];
 
@@ -18,6 +18,23 @@ class mergeArray {
             mergedArray[size1 + i] = arr2[i];
         }
 
+        return mergedArray;
+    }
+
+    int[] concatSort(int[] arr1, int[] arr2, int size1, int size2) {
+
+        int[] mergedArray = concatArray(arr1, arr2, size1, size2);
+
+        for (int i = 0; i < mergedArray.length; i++) {
+            for (int j = 0; j < mergedArray.length - 1 - i; j++) {
+
+                if (mergedArray[j] > mergedArray[j + 1]) {
+                    int temp = mergedArray[j];
+                    mergedArray[j] = mergedArray[j + 1];
+                    mergedArray[j + 1] = temp;
+                }
+            }
+        }
         return mergedArray;
     }
 
@@ -64,17 +81,29 @@ class mergeArray {
             arr2[i] = sc.nextInt();
         }
 
-        int[] mergedArray ;
+        int[] mergedArray;
+
+        mergeArray merge = new mergeArray();
 
         while (true) {
 
             System.out.println("Enter your choice: ");
             System.out.println("1.Concat array");
+            System.out.println("2.concatsort");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
-                    mergedArray = concatArray(arr1, arr2, size1, size2);
+                    mergedArray = merge.concatArray(arr1, arr2, size1, size2);
                     break;
+
+                case 2:
+                    mergedArray = merge.concatSort(arr1, arr2, size1, size2);
+                    break;
+
+                case 3:
+                    System.out.println("Exxiting..");
+                    sc.close();
+                    return;
                 default:
                     System.out.println("Enter the valid choice");
                     continue;
@@ -84,8 +113,7 @@ class mergeArray {
             for (int i = 0; i < mergedArray.length; i++) {
                 System.out.print(mergedArray[i] + " ");
             }
-            break;
+            System.out.println();
         }
-        sc.close();
     }
 }
